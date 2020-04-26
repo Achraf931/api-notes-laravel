@@ -35,8 +35,7 @@ class NoteController extends Controller
     public function update(NoteRequest $request, $id)
     {
         try {
-            Note::findOrFail($id)->update($request->all());
-            return response()->json(['note' => Note::where('id', $id)->get()->first(), 'error' => null]);
+            return response()->json(['note' => Note::findOrFail($id)->update($request->all()), 'error' => null]);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Cet identifiant est inconnu'], 404);
         }
