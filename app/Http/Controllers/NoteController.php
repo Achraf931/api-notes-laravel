@@ -11,7 +11,7 @@ class NoteController extends Controller
 {
     public function index()
     {
-        $result = Note::orderBy('created_at', 'desc')->get();
+        $result = Note::orderBy('created_at', 'desc')->get()->first();
         if (empty($result)) {
             return response()->json(['error' => 'Nothing to get']);
         }
@@ -28,7 +28,7 @@ class NoteController extends Controller
         try {
             return response()->json(['note' => Note::create($request->all()), 'error' => null]);
         } catch (ModelNotFoundException $e) {
-            return response()->json(['error' => 'Cet identifiant est inconnu'], 404);
+            return response()->json(['error' => 'Error to insert'], 404);
         }
     }
 
@@ -54,7 +54,7 @@ class NoteController extends Controller
     public function destroy($id)
     {
         try {
-            Note::findOrFail('id', $id)->delete();
+            Note::findOrFail($id)->delete();
             return response()->json(['error' => null]);
         } catch (ModelNotFoundException $exception) {
             return response()->json(['error' => 'Cet identifiant est inconnu'], 404);

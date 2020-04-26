@@ -41,8 +41,8 @@ class NoteRequest extends FormRequest
 
     protected function failedValidation(Validator $validator)
     {
-        $errors = (new ValidationException($validator))->errors();
-        throw new HttpResponseException(response()->json(['error' => $errors
+        $error = (new ValidationException($validator))->errors();
+        throw new HttpResponseException(response()->json(['error' => $error
         ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY));
     }
 }
