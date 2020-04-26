@@ -11,8 +11,8 @@ class NoteController extends Controller
 {
     public function index()
     {
-        $result = Note::orderBy('created_at', 'desc')->get()->first();
-        if (empty($result)) {
+        $result = Note::orderBy('created_at', 'desc')->get();
+        if (sizeof($result) === 0) {
             return response()->json(['error' => 'Nothing to get']);
         }
 
