@@ -13,13 +13,13 @@ class NoteController extends Controller
     {
         $result = Note::orderBy('created_at', 'desc')->get();
         if (sizeof($result) === 0) {
-            return response()->json(['error' => 'Nothing to get']);
+            return response()->json(['error' => 'Nothing to get', 'notes' => $result]);
         }
 
         try {
             return response()->json(['notes' => $result, 'error' => null]);
         } catch (ModelNotFoundException $exception) {
-            return response()->json(['error' => 'Nothing to get'], 404);
+            return response()->json(['error' => 'Nothing to get', 'notes' => $result], 404);
         }
     }
 
@@ -28,7 +28,7 @@ class NoteController extends Controller
         try {
             return response()->json(['note' => Note::create($request->all()), 'error' => null]);
         } catch (ModelNotFoundException $e) {
-            return response()->json(['error' => 'Error to insert'], 404);
+            return response()->json(['error' => 'Error to insert', 'note' => null], 404);
         }
     }
 
@@ -38,7 +38,7 @@ class NoteController extends Controller
             Note::findOrFail($id)->update($request->all());
             return response()->json(['note' => Note::where('id', $id)->get()->first(), 'error' => null]);
         } catch (ModelNotFoundException $e) {
-            return response()->json(['error' => 'Cet identifiant est inconnu'], 404);
+            return response()->json(['error' => 'Cet identifiant est inconnu', 'note' => null], 404);
         }
     }
 
@@ -47,7 +47,7 @@ class NoteController extends Controller
         try {
             return response()->json(['note' => Note::findOrFail($id), 'error' => null]);
         } catch (ModelNotFoundException $exception) {
-            return response()->json(['error' => 'Cet identifiant est inconnu'], 404);
+            return response()->json(['error' => 'Cet identifiant est inconnu', 'note' => null], 404);
         }
     }
 
@@ -57,7 +57,7 @@ class NoteController extends Controller
             Note::findOrFail($id)->delete();
             return response()->json(['error' => null]);
         } catch (ModelNotFoundException $exception) {
-            return response()->json(['error' => 'Cet identifiant est inconnu'], 404);
+            return response()->json(['error' => 'Cet identifiant est inconnu', 'note' => null], 404);
         }
     }
 }
