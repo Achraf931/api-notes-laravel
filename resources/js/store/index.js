@@ -26,9 +26,7 @@ export default new Vuex.Store({
         addNote({commit}, note) {
             axios.post(`/api/notes`, note)
                 .then(res => {
-                    {
-                        commit('addNote', res.data)
-                    }
+                    commit('addNote', res.data)
                 })
                 .catch(err => console.error(err))
         },
@@ -46,7 +44,9 @@ export default new Vuex.Store({
         },
 
         updateNote({commit}, note) {
-            axios.patch(`/api/notes/${note.id}`, note)
+            axios.patch(`/api/notes/${note.id}`, note).then(res => {
+                console.log(res)
+            })
                 .catch(err => {
                     console.log(err)
                 })

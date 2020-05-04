@@ -69855,9 +69855,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     addNote: function addNote(_ref2, note) {
       var commit = _ref2.commit;
       axios.post("/api/notes", note).then(function (res) {
-        {
-          commit('addNote', res.data);
-        }
+        commit('addNote', res.data);
       })["catch"](function (err) {
         return console.error(err);
       });
@@ -69874,7 +69872,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     },
     updateNote: function updateNote(_ref4, note) {
       var commit = _ref4.commit;
-      axios.patch("/api/notes/".concat(note.id), note)["catch"](function (err) {
+      axios.patch("/api/notes/".concat(note.id), note).then(function (res) {
+        console.log(res);
+      })["catch"](function (err) {
         console.log(err);
       });
     },
